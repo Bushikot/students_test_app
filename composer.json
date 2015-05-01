@@ -1,0 +1,15 @@
+{
+    "name": "Bushikot/students_test_app",
+    "description": "Pre-emploiment test application",
+    "authors": [
+        {
+            "name": "Koshechkin Denis",
+            "email": "bushikot@gmail.com"
+        }
+    ],
+    "require": {
+        "twitter/bootstrap": "3.3.*@dev",
+        "eonasdan/bootstrap-datetimepicker": "dev-master",
+        "jasongrimes/paginator": "dev-master"
+    }
+}
