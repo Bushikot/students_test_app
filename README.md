@@ -14,7 +14,7 @@ Develop a simple system:
 * Always show 10 students with top GPA.
 
 Design necessary tables, considering the conditions:
-There will be a lot of students(about 1-2 mln). Writing in these tables will be rival access. Students can often moves from group to group. Assumed frequent filter selections(including combinations): last name, group number, term number, GPA
+There will be a lot of students(about 1-2 mln). Writing in these tables will be rival access. Students can often moves from group to group. Assumed frequent filter selections(including combinations): last name, group number, term number, GPA.
 
 Write queries for searching in DB:
 * coursemates with GPA from X to Y and where name is %name%

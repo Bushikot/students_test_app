@@ -7,8 +7,8 @@ use JasonGrimes\Paginator;
 
 $dbh = pdo_connection();
 
-if ($_POST) {
-    switch($_POST["func"]) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    switch(filter_input(INPUT_POST, 'func')) {
         case "register":
             registerStudent();
             break;
@@ -25,11 +25,11 @@ if ($_POST) {
 }
 
 function registerStudent() {
-    if (!empty($_POST["fname"]) &&
-        !empty($_POST["lname"]) &&
-        !empty($_POST["groupnumber"]) &&
-        !empty($_POST["birthday"]) &&
-        !empty($_POST["email"])
+    if (($fname = filter_input(INPUT_POST, 'fname')) &&
+        ($lname = filter_input(INPUT_POST, 'lname')) &&
+        ($groupnumber = filter_input(INPUT_POST, 'groupnumber')) &&
+        ($birthday = filter_input(INPUT_POST, 'birthday')) &&
+        ($email = filter_input(INPUT_POST, 'email'))
     ) {
         global $dbh;
 
@@ -40,16 +40,16 @@ function registerStudent() {
         ");
 
         $stmt->execute(array(
-            ':fname' => $_POST["fname"],
-            ':lname' => $_POST["lname"],
-            ':birthday' => $_POST["birthday"],
-            ':email' => $_POST["email"],
+            ':fname' => $fname,
+            ':lname' => $lname,
+            ':birthday' => $birthday,
+            ':email' => $email,
             ':ipaddr' => $_SERVER['REMOTE_ADDR']
         ));
 
         $last_studentid = $dbh->lastInsertId();
 
-        generateFakeData($dbh, $last_studentid, $_POST["groupnumber"]);
+        generateFakeData($dbh, $last_studentid, $groupnumber);
 
         echo "query_successfully_executed";
     } else {
@@ -64,7 +64,7 @@ function getPagedStudentsList() {
 
     $totalItems = $students_count;
     $itemsPerPage = 10;
-    $currentPage = $_POST['page'];
+    $currentPage = filter_input(INPUT_POST, 'page');
     $urlPattern = '#(:num)';
 
     $topBound = $itemsPerPage * $currentPage;
@@ -95,14 +95,17 @@ function getAdditionalData() {
       LEFT JOIN subject ON subject.subjectid = mark.subjectid
       WHERE studentid = :studentid
     ");
-    $marks->execute(array(':studentid' => $_POST["studentid"]));
+
+    $studentid = filter_input(INPUT_POST, 'studentid');
+
+    $marks->execute(array(':studentid' => $studentid));
 
     $studentmove = $dbh->prepare("SELECT termnumber FROM studentmove WHERE iscurrent IS TRUE AND studentid = :studentid LIMIT 1");
-    $studentmove->execute(array(':studentid' => $_POST["studentid"]));
+    $studentmove->execute(array(':studentid' => $studentid));
     $studentmove = $studentmove->fetch();
 
     $characteristic = $dbh->prepare("SELECT characteristic FROM characteristic WHERE studentid = :studentid LIMIT 1");
-    $characteristic->execute(array(':studentid' => $_POST["studentid"]));
+    $characteristic->execute(array(':studentid' => $studentid));
     $characteristic = $characteristic->fetch();
 
     include 'template2.php';
