@@ -97,7 +97,7 @@ class MainController
 
     	$students_list = $dbh->query("SELECT * FROM student ORDER BY gpa DESC, fname, lname LIMIT 10");
 
-	    require 'app/Views/StudentTopTen.php';
+	    require 'app/Views/studentListView.php';
     }
 
 }
