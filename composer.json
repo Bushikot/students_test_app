@@ -11,9 +11,5 @@
         "components/bootstrap": "dev-master",
         "eonasdan/bootstrap-datetimepicker": "dev-master",
         "jasongrimes/paginator": "dev-master"
-    },
-    "config": {
-        "preferred-install": "dist",
-        "component-dir": "web/components"
     }
 }
