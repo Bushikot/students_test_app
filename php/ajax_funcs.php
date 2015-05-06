@@ -33,7 +33,6 @@ function registerStudent() {
     ) {
         global $dbh;
 
-        //сюда нужно filter_var
         $stmt = $dbh->prepare("
             INSERT INTO student (fname, lname, birthday, email, ipaddr)
             VALUES (:fname, :lname, :birthday, :email, :ipaddr)
