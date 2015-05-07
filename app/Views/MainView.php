@@ -1,6 +1,3 @@
-<?php 
-chdir(dirname(__DIR__));
-?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>
